@@ -1,9 +1,9 @@
 // 引用用户模版数据
-const Student = require('../models/user.js');
+const Student = require('../models/student.js');
 
-const userController = {
+const studentController = {
   // showUser 获取用户数据并返回到页面
-  showUser: async function(req, res, next){
+  showStudent: async function(req, res, next){
     try{
       let userData = await Student.all()
       res.json({
@@ -17,4 +17,4 @@ const userController = {
   },
 }
 
-module.exports = userController;
+module.exports = studentController;
