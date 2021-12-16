@@ -20,13 +20,17 @@ const userController = {
     try{
         const username = req.body.username;
         const password = req.body.password;
-        let user = await User.selectUser(username);
-        if (user[0].password === password) {
+        const userList = await User.selectUser(username);
+        const user = userList[0];
+        req.session.userInfo = user;
+        console.log(req.session);
+        if (user.password === password) {
             res.json({
                 code: 200,
                 message: "登陆成功",
                 data: {
-                    loginSuccess: true
+                    loginSuccess: true,
+                    user
                 }
               })
         } else {
@@ -34,13 +38,30 @@ const userController = {
                 code: 200,
                 message: "用户名或密码错误",
                 data: {
-                    loginSuccess: false
+                    loginSuccess: false,
                 }
               })
         }
       }catch(e){
         res.json({ code: 0, message: "操作失败", data: e })
       }
+  },
+
+  checkLoginStatus: async function(req, res) {
+    console.log(req.session);
+    // console.log(req.headers);
+    if (req.session.userInfo) {
+        console.log('logined');
+    } else {
+        console.log('not login');
+    }
+    res.json({
+        code: 200,
+        message: "",
+        data: {
+           
+        }
+      })
   }
 }
 

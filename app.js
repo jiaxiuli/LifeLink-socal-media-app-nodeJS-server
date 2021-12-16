@@ -1,11 +1,13 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var cookies = require('cookies');
 var cookieParser = require('cookie-parser');
 var morgan = require('morgan');
 var logger = require('./logger');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var session = require("express-session");
 
 var app = express();
 
@@ -25,6 +27,18 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// app.use(function (req,res,next) {
+//   req.cookies = new cookies(req,res);
+//   next();
+// });
+app.use(session({
+  name: 'loginStatus',
+  secret: 'secret',
+  cookie: {maxAge: 500000},
+  saveUninitialized: true,
+  resave: true,
+  rolling:true,
+}))
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
