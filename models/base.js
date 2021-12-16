@@ -10,6 +10,9 @@ class Base{
     return knex(this.table).select();
   }
 
+  selectUser (username) {
+    return knex(this.table).where('username', '=', username);
+  }
   // 新增
   insert (params){
     return knex(this.table).insert(params);
