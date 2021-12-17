@@ -1,7 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookies = require('cookies');
 var cookieParser = require('cookie-parser');
 var morgan = require('morgan');
 var logger = require('./logger');
@@ -34,11 +33,14 @@ app.use(cookieParser());
 app.use(session({
   name: 'loginStatus',
   secret: 'secret',
-  cookie: {maxAge: 500000},
+  // cookie: {maxAge: 30 * 60 * 1000},
+  cookie: {maxAge: 5000},
   saveUninitialized: true,
   resave: true,
   rolling:true,
 }))
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -49,6 +51,7 @@ app.use('/users', usersRouter);
 app.use(function(req, res, next) {
   next(createError(404));
 });
+
 
 const _errorHandler = (err, req, res, next) => {
   logger.error(`${req.method} ${req.originalUrl} ${err.message}`);
