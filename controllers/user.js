@@ -22,7 +22,7 @@ const userController = {
         const userList = await User.selectUser(username);
         const user = userList[0];
         if (user.password === password) {
-            req.session.loginStatus = true;
+            req.session[`${user.id}_loginStatus`] = true;
             res.send({
                 code: 200,
                 message: "登陆成功",
@@ -46,9 +46,10 @@ const userController = {
   },
 
   checkLoginStatus: async function(req, res) {
-    const loginStatus = req.session.loginStatus;
+    const id = req.query.id;
+    const loginStatus = req.session[`${id}_loginStatus`];
     if (loginStatus) {
-        req.session.loginStatus = true;
+        req.session[`${id}_loginStatus`] = true;
     }
     res.send({
         code: 200,

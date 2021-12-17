@@ -33,8 +33,7 @@ app.use(cookieParser());
 app.use(session({
   name: 'loginStatus',
   secret: 'secret',
-  // cookie: {maxAge: 30 * 60 * 1000},
-  cookie: {maxAge: 5000},
+  cookie: {maxAge: 30 * 60 * 1000},
   saveUninitialized: true,
   resave: true,
   rolling:true,
