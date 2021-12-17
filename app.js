@@ -26,14 +26,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(function (req,res,next) {
-//   req.cookies = new cookies(req,res);
-//   next();
-// });
+
 app.use(session({
   name: 'loginStatus',
   secret: 'secret',
-  cookie: {maxAge: 30 * 60 * 1000},
+  cookie: {maxAge: 24 * 60 * 60 * 1000},
   saveUninitialized: true,
   resave: true,
   rolling:true,

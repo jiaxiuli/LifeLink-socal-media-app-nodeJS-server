@@ -19,7 +19,7 @@ const userController = {
     try{
         const username = req.body.username;
         const password = req.body.password;
-        const userList = await User.selectUser(username);
+        const userList = await User.selectUserByUsername(username);
         const user = userList[0];
         if (user.password === password) {
             req.session[`${user.id}_loginStatus`] = true;
@@ -59,6 +59,29 @@ const userController = {
         }
     })
   },
+
+  getUserInfoById: async function(req, res) {
+    try {
+        const id = req.query.id;
+        const userList = await User.selectUserById(id);
+        const user = userList[0];
+        if (user) {
+            res.send({
+                code: 200,
+                message: "获取成功",
+                data: user
+            })
+        } else {
+            res.send({
+                code: 0,
+                message: "获取失败",
+                data: {}
+            })
+        }
+    }catch(e){
+        res.send({ code: 0, message: "操作失败", data: e })
+      }
+  }
 }
 
 module.exports = userController;

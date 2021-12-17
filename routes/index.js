@@ -13,6 +13,8 @@ router.post('/user_login', userController.userLogin);
 
 router.get('/check_login_status', userController.checkLoginStatus);
 
+router.get('/get_user_info_by_id', userController.getUserInfoById)
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
