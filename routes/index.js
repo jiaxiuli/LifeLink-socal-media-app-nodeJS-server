@@ -15,6 +15,7 @@ router.get('/check_login_status', userController.checkLoginStatus);
 
 router.get('/get_user_info_by_id', userController.getUserInfoById)
 
+router.get('/get_student_info_by_id', studentController.getStudentInfoById)
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
