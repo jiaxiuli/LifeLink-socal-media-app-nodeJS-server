@@ -17,9 +17,9 @@ const userController = {
 
   userLogin: async function(req, res) {
     try{
-        const username = req.body.username;
+        const email = req.body.email;
         const password = req.body.password;
-        const userList = await User.selectUserByUsername(username);
+        const userList = await User.selectUserByEmail(email);
         const user = userList[0];
         if (user.password === password) {
             req.session[`${user.id}_loginStatus`] = true;
@@ -81,6 +81,28 @@ const userController = {
     }catch(e){
         res.send({ code: 0, message: "操作失败", data: e })
       }
+  },
+
+  checkIsEmailAvalible: async function(req, res) {
+    try {
+      const email = req.query.email;
+      const userList = await User.selectUserByEmail(email);
+      if (!userList.length) {
+          res.send({
+              code: 200,
+              message: "email avalible",
+              data: true
+          })
+      } else {
+          res.send({
+              code: 201,
+              message: "email is registered",
+              data: false
+          })
+      }
+  }catch(e){
+      res.send({ code: 0, message: "操作失败", data: e })
+    }
   }
 }
 
