@@ -18,6 +18,14 @@ class User extends Base {
   selectUserById (id) {
     return knex(this.table).where('id', '=', id);
   }
+
+  insertNewUser(info) {
+    return knex(this.table).insert({
+      email: info.email,
+      password: info.password
+    });
+  }
+
 }
 
 module.exports = new User();

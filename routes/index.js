@@ -11,6 +11,8 @@ router.get('/check_login_status', userController.checkLoginStatus);
 router.get('/get_user_info_by_id', userController.getUserInfoById);
 
 router.get('/check_is_email_avalible', userController.checkIsEmailAvalible);
+
+router.post('/user_register', userController.userRegister)
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });

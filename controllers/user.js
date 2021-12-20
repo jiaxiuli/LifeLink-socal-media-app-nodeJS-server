@@ -103,6 +103,25 @@ const userController = {
   }catch(e){
       res.send({ code: 0, message: "操作失败", data: e })
     }
+  },
+
+  userRegister: async function(req, res) {
+    try {
+      const email = req.body.email;
+      const password = req.body.password;
+      const result = await User.insertNewUser({
+        email,
+        password
+      });
+      console.log(result);
+        res.send({
+          code: 200,
+          message: "create success",
+          data: false
+      })
+    }catch(e){
+      res.send({ code: 0, message: "操作失败", data: e })
+    }
   }
 }
 
