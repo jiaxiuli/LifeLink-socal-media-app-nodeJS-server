@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const userController = require('../controllers/user');
+const profilePhotoController = require('../controllers/ProfilePhoto');
 
 router.get('/get_all_user', userController.showUser);
 
@@ -12,7 +13,9 @@ router.get('/get_user_info_by_id', userController.getUserInfoById);
 
 router.get('/check_is_email_avalible', userController.checkIsEmailAvalible);
 
-router.post('/user_register', userController.userRegister)
+router.post('/user_register', userController.userRegister);
+
+router.post('/upload_profile_photo', profilePhotoController.uploadProfilePhoto)
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });

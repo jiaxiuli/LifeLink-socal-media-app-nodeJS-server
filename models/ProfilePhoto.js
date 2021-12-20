@@ -5,6 +5,12 @@ class ProfilePhoto extends Base {
   constructor(props = 'profilephoto'){
     super(props);
   }
+
+  uploadProfilePhoto (photoStr) {
+    return knex(this.table).insert({
+      picture: photoStr
+    });
+  }
 }
 
 module.exports = new ProfilePhoto();

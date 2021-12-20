@@ -7,6 +7,8 @@ var logger = require('./logger');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var session = require("express-session");
+var bodyParser = require('body-parser')
+
 
 var app = express();
 
@@ -22,6 +24,8 @@ app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
   next();
 });
+app.use(bodyParser.json({limit:'50mb'}));
+app.use(bodyParser.urlencoded({limit:'50mb',extended:true}));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
