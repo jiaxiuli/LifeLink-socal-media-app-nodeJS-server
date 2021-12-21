@@ -15,7 +15,9 @@ router.get('/check_is_email_avalible', userController.checkIsEmailAvalible);
 
 router.post('/user_register', userController.userRegister);
 
-router.post('/upload_profile_photo', profilePhotoController.uploadProfilePhoto)
+router.post('/upload_profile_photo', profilePhotoController.uploadProfilePhoto);
+
+router.get('/get_profile_photo', profilePhotoController.getProfilePhotoById)
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
