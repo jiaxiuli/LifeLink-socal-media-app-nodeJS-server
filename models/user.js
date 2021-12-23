@@ -37,6 +37,10 @@ class User extends Base {
     });
   }
 
+  updateUserInfo(userId, changeInfo) {
+    return knex(this.table).where('id', '=', userId).update(changeInfo);
+  }
+
 }
 
 module.exports = new User();

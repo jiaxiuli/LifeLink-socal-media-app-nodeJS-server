@@ -122,6 +122,29 @@ const userController = {
     }catch(e){
       res.send({ code: 0, message: "操作失败", data: e })
     }
+  },
+
+  updateUserInfo: async function (req, res) {
+    try {
+      const userId = req.body.userId;
+      const change = req.body.info;
+      if (userId && change) {
+        const result = await User.updateUserInfo(userId, change);
+        res.send({
+          code: 200,
+          message: "update success",
+          data: result
+        })
+      } else {
+        res.send({
+          code: 201,
+          message: "获取用户id和更新对象失败",
+          data: {}
+        })
+      }
+    } catch (e) {
+      res.send({ code: 0, message: "操作失败", data: e })
+    }
   }
 }
 
