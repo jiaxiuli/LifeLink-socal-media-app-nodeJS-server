@@ -113,12 +113,11 @@ const userController = {
         email,
         password
       });
-      console.log(result);
-        res.send({
-          code: 200,
-          message: "create success",
-          data: false
-      })
+      res.send({
+        code: 200,
+        message: "create success",
+        data: false
+    })
     }catch(e){
       res.send({ code: 0, message: "操作失败", data: e })
     }
