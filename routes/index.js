@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const userController = require('../controllers/user');
 const profilePhotoController = require('../controllers/ProfilePhoto');
+const catagoryController = require('../controllers/Catagory');
 
 router.get('/get_all_user', userController.showUser);
 
@@ -20,6 +21,9 @@ router.post('/upload_profile_photo', profilePhotoController.uploadProfilePhoto);
 router.get('/get_profile_photo', profilePhotoController.getProfilePhotoById);
 
 router.post('/update_user_info', userController.updateUserInfo);
+
+router.get('/get_all_catagory', catagoryController.getAllCatagory);
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
