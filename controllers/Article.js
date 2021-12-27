@@ -14,6 +14,9 @@ const articleController = {
             const author = authorList[0];
             article.create_time = date.toLocaleString();
             article.last_modifi_time = date.toLocaleString();
+            // 获取当前时间戳
+            article.create_timeStamp = Date.now();
+            article.lastMod_timeStamp = article.create_timeStamp;
             const result = await Article.uploadArticle(article);
             if (result.length && result[0]) {
                 if (!author.articles) {
@@ -57,9 +60,6 @@ const articleController = {
     },
 
     getArticlesFromUserList: async function (req, res) {
-        function wait(ms) {
-            return new Promise(resolve => setTimeout(() => resolve(), ms));
-        };
         try {
             const userList = JSON.parse(req.body.userList);
             if (userList.length) {
@@ -79,8 +79,14 @@ const articleController = {
                         return article;
                     }, (err, result) => {
                         if (result) {
-                            console.log(result[0].create_time);
-                            console.log(Date.parse(result[0].create_time));
+                            if (result.length) {
+                                result = result.map((item) => {
+                                    item.lastMod_timeStamp = parseInt(item.lastMod_timeStamp);
+                                    return item;
+                                });
+                                // 按照时间戳排序
+                                result.sort((a, b) => a.lastMod_timeStamp - b.lastMod_timeStamp);
+                            }
                             res.send({
                                 code: 200,
                                 message: "操作成功",
