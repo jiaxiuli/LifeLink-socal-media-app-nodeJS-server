@@ -11,6 +11,10 @@ class Article extends Base {
     return knex(this.table).insert(article); 
   }
 
+  getArticleById (articleId) {
+    return knex(this.table).where('id', '=', articleId).select();
+  }
+
 }
 
 module.exports = new Article();

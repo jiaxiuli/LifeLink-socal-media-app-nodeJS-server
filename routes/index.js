@@ -27,6 +27,8 @@ router.get('/get_all_catagory', catagoryController.getAllCatagory);
 
 router.post('/post_an_article', articleController.uploadArticle);
 
+router.post('/get_articles_from_userList', articleController.getArticlesFromUserList);
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
