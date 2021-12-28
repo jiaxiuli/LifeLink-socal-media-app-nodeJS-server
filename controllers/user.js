@@ -1,5 +1,6 @@
 // 引用用户模版数据
 const User = require('../models/user.js');
+const async = require('async');
 
 const userController = {
   showUser: async function(req, res){
@@ -141,6 +142,35 @@ const userController = {
           data: {}
         })
       }
+    } catch (e) {
+      res.send({ code: 0, message: "操作失败", data: e })
+    }
+  },
+
+  getFollowedUserInfo: async function (req, res) {
+    try {
+      const userListStr = req.query.userListStr;
+      const userList = JSON.parse(userListStr);
+      async.map(userList, async (userId) => {
+        const uList = await User.selectUserById(userId);
+        const u = uList[0];
+        u.password = '';
+        return u;
+      }, (err, result) => {
+        if (result) {
+          res.send({
+            code: 200,
+            message: "获取关注列表信息成功",
+            data: result
+          })
+        } else {
+          res.send({
+            code: 0,
+            message: "获取关注列表信息失败",
+            data: result
+          })
+        }
+      });
     } catch (e) {
       res.send({ code: 0, message: "操作失败", data: e })
     }
