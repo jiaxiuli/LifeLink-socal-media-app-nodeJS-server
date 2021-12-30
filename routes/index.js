@@ -31,6 +31,8 @@ router.post('/get_articles_from_userList', articleController.getArticlesFromUser
 
 router.get('/get_followed_user_info', userController.getFollowedUserInfo);
 
+router.post('/update_article_info', articleController.updateArticleInfo);
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });

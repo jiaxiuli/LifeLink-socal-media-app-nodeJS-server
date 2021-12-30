@@ -17,6 +17,8 @@ const articleController = {
             // 获取当前时间戳
             article.create_timeStamp = Date.now();
             article.lastMod_timeStamp = article.create_timeStamp;
+            article.likes = 0;
+            article.collects = 0;
             const result = await Article.uploadArticle(article);
             if (result.length && result[0]) {
                 if (!author.articles) {
@@ -114,6 +116,33 @@ const articleController = {
                 code: 0,
                 message: "操作失败",
                 data: err
+            });
+        }
+    },
+
+    updateArticleInfo: async function (req, res) {
+        try {
+            const { articleId, params } = req.body;
+            const result = await Article.update(articleId, params);
+            if (result) {
+                res.send({
+                    code: 200,
+                    message: "操作成功",
+                    data: {
+                        likes: result,
+                    }
+                });
+            } else {
+                res.send({
+                    code: 0,
+                    data: {}
+                });
+            }
+        }catch {
+            res.send({
+                code: 0,
+                message: "操作失败",
+                data: {}
             });
         }
     }
