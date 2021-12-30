@@ -81,7 +81,8 @@ const articleController = {
                         if (result) {
                             if (result.length) {
                                 result = result.map((item) => {
-                                    item.lastMod_timeStamp = parseInt(item.lastMod_timeStamp);
+                                    if (item)
+                                        item.lastMod_timeStamp = parseInt(item.lastMod_timeStamp);
                                     return item;
                                 });
                                 // 按照时间戳排序
