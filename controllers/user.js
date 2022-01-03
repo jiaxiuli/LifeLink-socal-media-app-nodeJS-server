@@ -88,6 +88,7 @@ const userController = {
     try {
       const email = req.query.email;
       const userList = await User.selectUserByEmail(email);
+      console.log(userList);
       if (!userList.length) {
           res.send({
               code: 200,
@@ -110,9 +111,14 @@ const userController = {
     try {
       const email = req.body.email;
       const password = req.body.password;
+      const nullArr = JSON.stringify([]);
       const result = await User.insertNewUser({
         email,
-        password
+        password,
+        pic_id: 8,
+        articles: nullArr,
+        follow: nullArr,
+        follower: nullArr
       });
       res.send({
         code: 200,

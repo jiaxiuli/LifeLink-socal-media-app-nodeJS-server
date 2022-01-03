@@ -31,10 +31,7 @@ class User extends Base {
   }
 
   insertNewUser(info) {
-    return knex(this.table).insert({
-      email: info.email,
-      password: info.password
-    });
+    return knex(this.table).insert(info);
   }
 
   updateUserInfo(userId, changeInfo) {

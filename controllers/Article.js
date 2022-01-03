@@ -17,8 +17,8 @@ const articleController = {
             // 获取当前时间戳
             article.create_timeStamp = Date.now();
             article.lastMod_timeStamp = article.create_timeStamp;
-            article.likes = 0;
-            article.collects = 0;
+            article.likes = JSON.stringify([]);
+            article.collects = JSON.stringify([]);
             const result = await Article.uploadArticle(article);
             if (result.length && result[0]) {
                 if (!author.articles) {
@@ -88,7 +88,7 @@ const articleController = {
                                     return item;
                                 });
                                 // 按照时间戳排序
-                                result.sort((a, b) => a.lastMod_timeStamp - b.lastMod_timeStamp);
+                                result.sort((a, b) => b.lastMod_timeStamp - a.lastMod_timeStamp);
                             }
                             res.send({
                                 code: 200,
@@ -123,14 +123,14 @@ const articleController = {
     updateArticleInfo: async function (req, res) {
         try {
             const { articleId, params } = req.body;
-            const result = await Article.update(articleId, params);
-            if (result) {
+            await Article.update(articleId, params);
+            const resultList = await Article.getArticleById(articleId);
+            if (resultList) {
+                const result = resultList[0];
                 res.send({
                     code: 200,
                     message: "操作成功",
-                    data: {
-                        likes: result,
-                    }
+                    data: result    
                 });
             } else {
                 res.send({
