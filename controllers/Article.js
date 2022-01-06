@@ -64,6 +64,7 @@ const articleController = {
     getArticlesFromUserList: async function (req, res) {
         try {
             const userList = JSON.parse(req.body.userList);
+            const lastArticleId = req.body.lastArticleId;
             if (userList.length) {
                 async.map(userList, async (userId) => {
                     const users = await User.selectUserById(userId);
@@ -90,6 +91,12 @@ const articleController = {
                                 // 按照时间戳排序
                                 result.sort((a, b) => b.lastMod_timeStamp - a.lastMod_timeStamp);
                             }
+                            let startIndex = 0;
+                            if (lastArticleId !== -1) {
+                                startIndex = result.findIndex((item) => item.id === lastArticleId) + 1;
+                            }
+                            result = result.slice(startIndex, Math.min(startIndex + 2, result.length));
+                            
                             res.send({
                                 code: 200,
                                 message: "操作成功",
