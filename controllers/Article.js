@@ -95,12 +95,16 @@ const articleController = {
                             if (lastArticleId !== -1) {
                                 startIndex = result.findIndex((item) => item.id === lastArticleId) + 1;
                             }
+                            const isFinal = startIndex + 2 >= result.length;
                             result = result.slice(startIndex, Math.min(startIndex + 2, result.length));
                             
                             res.send({
                                 code: 200,
                                 message: "操作成功",
-                                data: result
+                                data: {
+                                    result,
+                                    isFinal
+                                }
                             });
                         } else {
                             res.send({
